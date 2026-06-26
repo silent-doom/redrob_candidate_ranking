@@ -1,0 +1,48 @@
+# ==========================================
+# Redrob Hackathon Specific Files
+# ==========================================
+# Ignore the massive raw candidate datasets
+candidates.jsonl
+candidates.jsonl.gz
+sample_candidates.json
+
+# Ignore the generated submission CSVs
+team_submission.csv
+*.csv
+
+# Ignore large offline pre-computed artifacts (GitHub has a 100MB file limit)
+candidate_vectors.npy
+candidate_features.parquet
+jd_target_vector.npy
+
+# Ignore any old FAISS indexes if you ran the earlier script
+*.index
+
+# ==========================================
+# Python & Environments
+# ==========================================
+# Virtual environments
+redrob_env/
+venv/
+env/
+.env
+
+# Cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# ==========================================
+# OS & IDE Files
+# ==========================================
+# Mac OS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code / PyCharm
+.vscode/
+.idea/
+*.swp
