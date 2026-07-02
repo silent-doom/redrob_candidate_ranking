@@ -86,3 +86,10 @@ The hybrid scoring script implements explicit business logic to align directly w
 1. **The Product Engineering Bias:** The job description explicitly penalizes candidates with pure IT-consulting backgrounds. The pipeline evaluates historical company lists and applies a strict penalty modifier if the candidate has never worked outside of those environments.
 2. **Behavioral Availability Adjustments:** A candidate with high technical proficiency who does not respond to recruiters is down-weighted. The model treats recruiter response rates and interview completion rates as active multipliers.
 3. **Notice Period Thresholds:** Candidates with stated notice configurations exceeding 60 days incur an automatic score reduction.
+
+
+## 🌐 Global Deployment
+
+A live version of the solution is deployed globally via Hugging Face Spaces.
+
+* **Live Demo: [huggingface.co/spaces/FaizanC/redrob-candidate-ranker](https://huggingface.co/spaces/FaizanC/redrob-candidate-ranker)**
