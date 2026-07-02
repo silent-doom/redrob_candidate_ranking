@@ -1,0 +1,18 @@
+version: "1.0"
+team_name: "Setter Intelligence Pro"
+primary_contact:
+  name: "Faizan Choudhary"
+  email: "faizan.choudhary@example.com"
+  phone: "+91XXXXXXXXXX"
+github_repository_url: "https://github.com/silent-doom/redrob_candidate_ranking"
+sandbox_demo_link: "https://huggingface.co/spaces/FaizanC/redrob-candidate-ranker"
+ai_tools_declared:
+  - Gemini
+  - Copilot
+compute_environment_summary: "M4 Mac, 16GB Unified RAM, Python 3.13"
+methodology_summary: >
+  Implemented a highly optimized two-stage pipeline. The offline ETL phase processes 100K 
+  candidates directly, using sentence-transformers to capture semantic experience and engineering 
+  specific flags for honeypot traps and IT-services boundaries. The online inference ranking phase 
+  leverages pure NumPy vector matrix math to extract high-recall matches in under 2 seconds, 
+  avoiding memory overhead or runtime environment dependencies.

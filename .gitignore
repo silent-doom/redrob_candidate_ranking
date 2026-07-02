@@ -8,6 +8,8 @@ sample_candidates.json
 
 # Ignore the generated submission CSVs
 team_submission.csv
+*.xlsx
+*.pdf
 *.csv
 
 # Ignore large offline pre-computed artifacts (GitHub has a 100MB file limit)

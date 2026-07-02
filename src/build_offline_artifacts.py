@@ -11,9 +11,7 @@ def build_offline_artifacts():
     candidates_data = []
     embeddings_text = []
     
-    # Consulting firms to flag as per the JD's explicit warning
     consulting_firms = {'tcs', 'infosys', 'wipro', 'accenture', 'cognizant', 'capgemini'}
-    
     print("Parsing candidates.jsonl...")
     
     with open('candidates.jsonl', 'rt', encoding='utf-8') as f:
@@ -26,12 +24,10 @@ def build_offline_artifacts():
             history = cand.get('career_history', [])
             skills = cand.get('skills', [])
             
-            # --- 1. Semantic Text Build ---
             latest_role_desc = history[0].get('description', '') if history else ''
             semantic_string = f"{profile.get('headline', '')}. {profile.get('summary', '')}. {latest_role_desc}"
             embeddings_text.append(semantic_string)
             
-            # --- 2. Honeypot Detection Heuristics ---
             is_honeypot = 0
             years_exp = profile.get('years_of_experience', 0)
             
@@ -43,7 +39,6 @@ def build_offline_artifacts():
                     is_honeypot = 1
                     break
             
-            # --- 3. JD Constraint Features ---
             companies_worked = {h.get('company', '').lower() for h in history}
             only_consulting = 1 if (len(companies_worked) > 0 and companies_worked.issubset(consulting_firms)) else 0
             
@@ -57,24 +52,18 @@ def build_offline_artifacts():
                 'only_consulting_flag': only_consulting
             })
 
-    # --- Generate Embeddings ---
     print(f"\nGenerating embeddings for {len(embeddings_text)} candidates...")
     embeddings = model.encode(embeddings_text, batch_size=256, show_progress_bar=True)
     
-    # --- Normalize & Save NumPy Array (Replacing FAISS) ---
     print("\nNormalizing vectors for Cosine Similarity...")
     norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
     embeddings_normalized = embeddings / norms
     np.save("candidate_vectors.npy", embeddings_normalized)
-    print("-> Vectors saved to 'candidate_vectors.npy'")
     
-    # --- Save Features Table ---
     print("Saving structured features to Parquet...")
     df = pd.DataFrame(candidates_data)
     df.to_parquet("candidate_features.parquet", index=False)
-    print("-> Feature table saved to 'candidate_features.parquet'")
     
-    # --- JD Target Embedding ---
     print("Generating Job Description target embedding...")
     ideal_candidate_text = """
     Senior AI Engineer with 5 to 9 years of experience. Strong production background in ML systems, 
@@ -83,12 +72,9 @@ def build_offline_artifacts():
     Fast execution, scrappy product engineering attitude.
     """
     target_embedding = model.encode([ideal_candidate_text])
-    
-    # Normalize JD Target
     target_norm = np.linalg.norm(target_embedding, axis=1, keepdims=True)
     target_embedding_normalized = target_embedding / target_norm
     np.save("jd_target_vector.npy", target_embedding_normalized)
-    print("-> Target vector saved to 'jd_target_vector.npy'")
     
     print("\nPhase 1 Complete! Artifacts are ready.")
 
